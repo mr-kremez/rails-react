@@ -1,4 +1,4 @@
-var Records = React.createClass({
+var RecordBox = React.createClass({
   getInitialState: function() {
     return { records: this.props.data };
   },
@@ -31,16 +31,10 @@ var Records = React.createClass({
     return (this.credits() + this.debits());
   },
   render: function() {
-    var self = this;
-    var tableRows = this.state.records.map(function(item){
-      return (
-        <Record key={item.id} record={item} handleDeleteRecord={self.deleteRecord} handleEditRecord={self.updateRecord} />
-      );
-    });
     return (
       <div className='records'>
         <h2 className='title'>
-          Records
+        Records
         </h2>
         <div className='row'>
           <AmountBox text='Credit' amount={this.credits()} panelType='success' />
@@ -49,17 +43,7 @@ var Records = React.createClass({
         </div>
         <RecordForm handleNewRecord={this.addRecord} />
         <hr />
-        <table className='table table-bordered'>
-          <thead>
-            <th>Date</th>
-            <th>Title</th>
-            <th>Amount</th>
-            <th>Actions</th>
-          </thead>
-          <tbody>
-            {tableRows}
-          </tbody>
-        </table>
+        <RecordList deleteRecord={this.deleteRecord} updateRecord={this.updateRecord} records={this.state.records} />
       </div>
     );
   }
